@@ -2,6 +2,8 @@ from flask import Flask
 from database import db
 from sqlalchemy_utils import create_database, database_exists
 from routes.routes  import blue_print
+import datetime
+
 app = Flask(__name__)
 
 #Base de Datos
@@ -14,6 +16,11 @@ DB_URL = f'mysql+pymysql://{db_usuario}:{db_clave}@{db_host}/{db_nombre}'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = "2d3lt-5s-M1-Cl5v95"
+app.config['JWT_ACCES_TOKEN_EXPIRES'] = datetime.timedelta(hours=4) #Token Expire en cuatro horas
+
+#JWT
+jwt = JWTManager(app)
 
 #Inicializamos SQLAchemy para inicializar mi bd
 db.init_app(app)
