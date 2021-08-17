@@ -1,7 +1,7 @@
 from flask import Flask
 from database import db
 from sqlalchemy_utils import create_database, database_exists
-
+from routes.routes  import blue_print
 app = Flask(__name__)
 
 #Base de Datos
@@ -18,9 +18,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #Inicializamos SQLAchemy para inicializar mi bd
 db.init_app(app)
 
-@app.route('/',methods=['GET'])
-def inicio():
-    return "<h1>Flask API</h1>"
+
+#Instanciamos las rutas de nuestro api
+app.register_blueprint(blue_print)
 
 # Creamos la base de Datos, en caso de no existir le paso la conexion para que me la cree
 with app.app_context():
