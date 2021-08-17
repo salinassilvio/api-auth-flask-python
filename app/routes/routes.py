@@ -3,6 +3,7 @@ import flask
 from flask import Blueprint,request,jsonify
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from models.models import Usuario
+from database import db
 import bcrypt 
 blue_print = Blueprint('app',__name__)
 
@@ -70,3 +71,10 @@ def iniciar_sesion():
         
     except Exception:
         return jsonify(respuesta='Error en peticion'),500
+
+""" RUTAS PROTEGIDAS POR JWT"""
+#Ruta Home o Inicio
+@blue_print.route('/saludo',methods=['GET'])
+@jwt_required()
+def inicio():
+    return jsonify(respuesta='Hello World')
