@@ -1,5 +1,3 @@
-from types import resolve_bases
-import flask
 from flask import Blueprint,request,jsonify
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
 from models.models import Usuario
@@ -12,7 +10,7 @@ blue_print = Blueprint('app',__name__)
 def inicio():
     return jsonify(respuesta='Rest API con Flask y Mysql')
 
-#Ruta Home o Inicio
+#Ruta Registrar Usuario
 @blue_print.route('/auth/registrar',methods=['POST'])
 def registrar_usuario():
     try:
@@ -41,7 +39,7 @@ def registrar_usuario():
         return jsonify(respuesta='Usuario Creado Exitosamente'),201
 
     except Exception:
-        return jsonify(respuesta='Error al crear usuario'),500
+        return jsonify(respuesta='Error en la peticion'),500
 
 #Ruta para Iniciar Sesion
 @blue_print.route('/auth/login',methods=['POST'])
@@ -76,5 +74,5 @@ def iniciar_sesion():
 #Ruta Home o Inicio
 @blue_print.route('/saludo',methods=['GET'])
 @jwt_required()
-def inicio():
+def saludo():
     return jsonify(respuesta='Hello World')
